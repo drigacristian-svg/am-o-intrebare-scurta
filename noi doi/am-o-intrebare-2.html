@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>💌 O întrebare importantă</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background:
+        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+        url("noi_doi.jpeg") center 65% / cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      text-align: center;
+      color: white;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: showText 1.5s ease forwards;
+    }
+
+    .buttons {
+      margin-top: 30px;
+      opacity: 0;
+      animation: showButtons 1.2s ease forwards;
+      animation-delay: 1.6s;
+      position: relative;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin: 0 15px;
+    }
+
+    .yes { background: #2ecc71; color: white; }
+    .no  { background: #e74c3c; color: white; position: absolute; }
+
+    @keyframes showText {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes showButtons {
+      to { opacity: 1; }
+    }
+
+    /* Buton muzică */
+    #musicBtn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.85);
+      cursor: pointer;
+      z-index: 1001;
+      font-weight: bold;
+    }
+    #musicBtn:hover {
+      background: rgba(255,255,255,1);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Vrei să fii Valentine-ul meu? 💖</h1>
+    <div class="buttons">
+      <button class="yes" onclick="yesClick()">DA 💕</button>
+      <button class="no" onmouseover="moveNo()">NU 🙃</button>
+    </div>
+  </div>
+
+  <!-- Player audio (ascuns) -->
+  <audio id="musicPlayer" preload="auto">
+    <source src="Carla's Dreams - ae _ Official Video.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="musicBtn">🎵 Redă Muzică</button>
+
+  <script>
+    const musicBtn = document.getElementById('musicBtn');
+    const music = document.getElementById('musicPlayer');
+
+    let musicPlaying = false;
+
+    musicBtn.addEventListener('click', () => {
+      if (!musicPlaying) {
+        music.currentTime = 45; // pornește de la 00:45
+        music.play();
+        musicBtn.textContent = "⏸️ Oprește Muzica";
+        musicPlaying = true;
+      } else {
+        music.pause();
+        musicBtn.textContent = "🎵 Redă Muzică";
+        musicPlaying = false;
+      }
+    });
+
+    function yesClick() {
+      const container = document.querySelector('.container');
+      container.innerHTML = `
+        <h1 style="font-size:3em;">
+          Știam eu! 🥰💖<br>
+          Te iubesc!
+        </h1>
+      `;
+    }
+
+    function moveNo() {
+      const btn = document.querySelector('.no');
+      const container = document.querySelector('.buttons');
+      const x = Math.random() * (container.offsetWidth - 80);
+      const y = Math.random() * 80;
+      btn.style.left = x + 'px';
+      btn.style.top = y + 'px';
+    }
+  </script>
+
+</body>
+</html>
